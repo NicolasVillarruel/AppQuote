@@ -15,7 +15,7 @@ export async function POST(
     const supabase = await createServiceClient();
 
     // Fetch full quote data
-    const { data: cot, error } = await supabase
+    const { data: cotData, error } = await supabase
       .from("cotizaciones")
       .select(`
         *,
@@ -26,13 +26,15 @@ export async function POST(
       .eq("id", id)
       .single();
 
+    const cot = cotData as any;
+
     if (error || !cot) {
       return NextResponse.json({ error: "Cotización no encontrada" }, { status: 404 });
     }
 
     // Generate PDF buffer
     const buffer = await renderToBuffer(
-      React.createElement(CotizacionPDF, { cotizacion: cot as any })
+      React.createElement(CotizacionPDF, { cotizacion: cot as any }) as any
     );
 
     // Upload to Supabase Storage
@@ -60,7 +62,7 @@ export async function POST(
     const pdfUrl = signedData?.signedUrl ?? "";
 
     // Update cotizacion record
-    await supabase
+    await (supabase as any)
       .from("cotizaciones")
       .update({ pdf_url: pdfUrl, pdf_generado_en: new Date().toISOString() })
       .eq("id", id);
