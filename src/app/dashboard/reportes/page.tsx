@@ -31,7 +31,7 @@ export default async function ReportesPage() {
     if (!mesesMap[key]) {
       mesesMap[key] = { mes: label, borrador: 0, enviada: 0, aceptada: 0, rechazada: 0, total: 0 };
     }
-    mesesMap[key][c.estado as keyof typeof mesesMap[string]] = (mesesMap[key][c.estado as keyof typeof mesesMap[string]] as number ?? 0) + 1;
+    (mesesMap[key] as any)[c.estado] = ((mesesMap[key] as any)[c.estado] ?? 0) + 1;
     mesesMap[key].total += 1;
   });
   const chartEstados = Object.values(mesesMap);
