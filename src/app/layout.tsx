@@ -10,6 +10,12 @@ export const metadata: Metadata = {
   },
   description:
     "Sistema profesional de cotizaciones para paneles de fachada importados desde Europa.",
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({

@@ -127,10 +127,9 @@ const navSections = [
 ];
 
 // ─── Props ──────────────────────────────────────────────────────────────────
-interface SidebarProps {
-  userEmail?: string;
-  userRole?: string;
   userName?: string;
+  mobileOpen?: boolean;
+  setMobileOpen?: (open: boolean) => void;
 }
 
 // ─── Nav item ───────────────────────────────────────────────────────────────
@@ -187,9 +186,12 @@ function NavItem({
 }
 
 // ─── Main Sidebar ────────────────────────────────────────────────────────────
-export function Sidebar({ userEmail, userRole, userName }: SidebarProps) {
+export function Sidebar({ userEmail, userRole, userName, mobileOpen: externalMobileOpen, setMobileOpen: externalSetMobileOpen }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [internalMobileOpen, setInternalMobileOpen] = useState(false);
+
+  const mobileOpen = externalMobileOpen ?? internalMobileOpen;
+  const setMobileOpen = externalSetMobileOpen ?? setInternalMobileOpen;
   const pathname = usePathname();
   const router = useRouter();
   const { theme, setTheme } = useTheme();
@@ -395,15 +397,7 @@ export function Sidebar({ userEmail, userRole, userName }: SidebarProps) {
       {/* Desktop sidebar */}
       <div className="hidden lg:flex h-screen sticky top-0">{sidebarContent}</div>
 
-      {/* Mobile hamburger */}
-      <div className="lg:hidden fixed top-4 left-4 z-50">
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="p-2 rounded-lg bg-background border border-border shadow-md"
-        >
-          <Menu className="w-5 h-5" />
-        </button>
-      </div>
+      {/* Mobile hamburger removed - handled by external header */}
 
       {/* Mobile overlay */}
       {mobileOpen && (

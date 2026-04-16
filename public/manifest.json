@@ -1,0 +1,17 @@
+{
+  "name": "AppQuote — Cotizador de Fachadas",
+  "short_name": "AppQuote",
+  "description": "Sistema profesional de cotizaciones para paneles de fachada.",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#040b1a",
+  "theme_color": "#844ea3",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
