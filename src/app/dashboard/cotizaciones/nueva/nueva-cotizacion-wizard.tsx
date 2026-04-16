@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
@@ -110,6 +110,37 @@ export function NuevaCotizacionWizard({
   const [tasaEurPen, setTasaEurPen] = useState(3.85);
   const [tasaUsdPen, setTasaUsdPen] = useState(3.75);
   const [margen, setMargen] = useState(20);
+
+  // ─── Fetch BCRP Rates ──────────────────────────────────────────────────────
+  useEffect(() => {
+    async function fetchTasas() {
+      try {
+        const hoy = new Date();
+        const pasado = new Date();
+        pasado.setDate(hoy.getDate() - 7);
+        const f1 = pasado.toISOString().split("T")[0];
+        const f2 = hoy.toISOString().split("T")[0];
+        
+        // PD04640PD: Dólar Venta, PD04648PD: Euro Venta
+        const res = await fetch(`https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PD04640PD-PD04648PD/json/${f1}/${f2}`);
+        if (!res.ok) throw new Error("API BCRP error");
+        const data = await res.json();
+        
+        const eurIdx = data.config.series.findIndex((s: any) => s.name.includes("Euro"));
+        const usdIdx = data.config.series.findIndex((s: any) => s.name.includes("US$"));
+        
+        if (data.periods && data.periods.length > 0) {
+          const lastPeriod = data.periods[data.periods.length - 1];
+          if (eurIdx !== -1 && lastPeriod.values[eurIdx] !== "n.d.") setTasaEurPen(parseFloat(lastPeriod.values[eurIdx]));
+          if (usdIdx !== -1 && lastPeriod.values[usdIdx] !== "n.d.") setTasaUsdPen(parseFloat(lastPeriod.values[usdIdx]));
+          toast.success(`Se aplicó el tipo de cambio del BCRP al cierre del ${lastPeriod.name}.`);
+        }
+      } catch (err) {
+        console.error("BCRP Fetch Error", err);
+      }
+    }
+    fetchTasas();
+  }, []);
 
   // ─── Calculations ──────────────────────────────────────────────────────────
   const tarifaTransporte = useMemo(() => {
