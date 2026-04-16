@@ -12,6 +12,14 @@ export async function POST(
 ) {
   try {
     const { id } = await params;
+    
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return NextResponse.json(
+        { error: "La variable de entorno SUPABASE_SERVICE_ROLE_KEY no está configurada en el servidor (Vercel)." }, 
+        { status: 500 }
+      );
+    }
+    
     const supabase = await createServiceClient();
 
     // Fetch full quote data
