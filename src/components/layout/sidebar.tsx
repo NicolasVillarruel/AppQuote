@@ -126,7 +126,9 @@ const navSections = [
   },
 ];
 
-// ─── Props ──────────────────────────────────────────────────────────────────
+interface SidebarProps {
+  userEmail?: string;
+  userRole?: string;
   userName?: string;
   mobileOpen?: boolean;
   setMobileOpen?: (open: boolean) => void;
