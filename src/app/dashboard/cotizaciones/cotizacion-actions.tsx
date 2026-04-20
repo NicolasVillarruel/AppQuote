@@ -38,13 +38,19 @@ export function CotizacionActions({
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       toast.success("PDF generado", { id: "pdf" });
-      const link = document.createElement("a");
-      link.href = data.url;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        window.location.href = data.url;
+      } else {
+        const link = document.createElement("a");
+        link.href = data.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
     } catch (e: any) {
       toast.error(e.message, { id: "pdf" });
     }
