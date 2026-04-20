@@ -22,7 +22,13 @@ export function DetalleCotizacionActions({
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       toast.success("PDF listo", { id: "pdf-det" });
-      window.open(data.url, "_blank");
+      const link = document.createElement("a");
+      link.href = data.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } catch (e: any) {
       toast.error(e.message ?? "Error al generar PDF", { id: "pdf-det" });
     } finally {
