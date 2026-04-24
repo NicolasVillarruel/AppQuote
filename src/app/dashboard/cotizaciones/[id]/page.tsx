@@ -105,6 +105,10 @@ export default async function DetalleCotizacionPage({
           <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Obra</p>
           <p className="font-semibold text-sm">{cot.direccion_obra || "Sin especificar"}</p>
           {zonaLabel && <p className="text-sm text-muted-foreground">{zonaLabel}</p>}
+          <div className="pt-3 mt-3 border-t border-border/40">
+            <p className="text-xs text-muted-foreground">TC Referencial: EUR/PEN {formatNumber(cot.tasa_cambio_eur_pen, 3)}</p>
+            <p className="text-[10px] text-muted-foreground/70">Fecha TC: {formatDate(cot.created_at)}</p>
+          </div>
         </div>
 
         {/* Summary */}

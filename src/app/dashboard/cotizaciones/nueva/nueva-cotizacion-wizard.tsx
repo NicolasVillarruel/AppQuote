@@ -111,6 +111,7 @@ export function NuevaCotizacionWizard({
   const [tasaEurPen, setTasaEurPen] = useState(3.85);
   const [tasaUsdPen, setTasaUsdPen] = useState(3.75);
   const [margen, setMargen] = useState(20);
+  const [tasaFecha, setTasaFecha] = useState("");
 
   // ─── Fetch BCRP Rates ──────────────────────────────────────────────────────
   useEffect(() => {
@@ -120,6 +121,7 @@ export function NuevaCotizacionWizard({
         if (data) {
           if (data.eur) setTasaEurPen(data.eur);
           if (data.usd) setTasaUsdPen(data.usd);
+          if (data.date) setTasaFecha(data.date);
           toast.success(`Se aplicó el tipo de cambio del BCRP al cierre del ${data.date}.`);
         }
       } catch (err) {
@@ -424,6 +426,7 @@ export function NuevaCotizacionWizard({
                     value={tasaEurPen}
                     onChange={(e) => setTasaEurPen(parseFloat(e.target.value) || 3.85)}
                   />
+                  {tasaFecha && <p className="text-[10.5px] text-muted-foreground mt-1 font-medium">Fecha TC: {tasaFecha}</p>}
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="tasa_usd">Tasa USD → PEN</Label>
@@ -434,6 +437,7 @@ export function NuevaCotizacionWizard({
                     value={tasaUsdPen}
                     onChange={(e) => setTasaUsdPen(parseFloat(e.target.value) || 3.75)}
                   />
+                  {tasaFecha && <p className="text-[10.5px] text-muted-foreground mt-1 font-medium">Fecha TC: {tasaFecha}</p>}
                 </div>
                 <div className="col-span-2 space-y-1.5">
                   <Label htmlFor="margen_pct">Margen de ganancia (%)</Label>
