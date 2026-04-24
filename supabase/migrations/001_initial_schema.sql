@@ -171,6 +171,7 @@ create table if not exists public.cotizaciones (
   estado                      text not null default 'borrador'
                                 check (estado in ('borrador','enviada','aceptada','rechazada','vencida')),
   tasa_cambio_eur_pen         numeric(8,4) not null default 3.75,
+  tasa_cambio_usd_pen         numeric(8,4) not null default 3.75,
   total_volumen_m3            numeric(10,4) not null default 0,
   total_peso_kg               numeric(10,2) not null default 0,
   subtotal_material_pen       numeric(16,2) not null default 0,

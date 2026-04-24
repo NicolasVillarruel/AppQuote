@@ -173,6 +173,7 @@ export type Database = {
           zona_transporte: string | null;
           estado: "borrador" | "enviada" | "aceptada" | "rechazada" | "vencida";
           tasa_cambio_eur_pen: number;
+          tasa_cambio_usd_pen: number;
           total_volumen_m3: number;
           total_peso_kg: number;
           subtotal_material_pen: number;

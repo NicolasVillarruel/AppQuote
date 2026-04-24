@@ -201,6 +201,7 @@ export function NuevaCotizacionWizard({
       zona_transporte: zonaTransporte || null,
       estado,
       tasa_cambio_eur_pen: tasaEurPen,
+      tasa_cambio_usd_pen: tasaUsdPen,
       total_volumen_m3: desglose.totalVolumenM3,
       total_peso_kg: desglose.totalPesoKg,
       subtotal_material_pen: desglose.subtotalMaterialPen,

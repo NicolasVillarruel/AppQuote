@@ -101,7 +101,9 @@ export function CotizacionPDF({ cotizacion: cot }: { cotizacion: any }) {
               <Text style={S.infoSmall}>Zona: {cot.zona_transporte.replace("_", " ")}</Text>
             )}
             <Text style={[S.infoSmall, { marginTop: 8 }]}>
-              Tasa cambio EUR/PEN: {formatNumber(cot.tasa_cambio_eur_pen, 3)} (Ref. al {fechaEmision})
+              Tasa cambio EUR/PEN: {formatNumber(cot.tasa_cambio_eur_pen, 3)} | USD/PEN: {formatNumber(cot.tasa_cambio_usd_pen || 3.75, 3)}
+              {"\n"}
+              (Ref. al {fechaEmision})
             </Text>
           </View>
         </View>
@@ -180,7 +182,7 @@ export function CotizacionPDF({ cotizacion: cot }: { cotizacion: any }) {
             ⏱ Esta cotización tiene una validez de {cot.validez_dias} días a partir de la fecha de emisión (vence el {fechaVence}).
           </Text>
           <Text style={[S.validezText, { marginTop: 4 }]}>
-            * Los precios en soles fueron calculados con el tipo de cambio EUR/PEN de {formatNumber(cot.tasa_cambio_eur_pen, 3)} (referencial al {fechaEmision}).
+            * Los precios en soles fueron calculados con tipo de cambio EUR/PEN de {formatNumber(cot.tasa_cambio_eur_pen, 3)} y USD/PEN de {formatNumber(cot.tasa_cambio_usd_pen || 3.75, 3)} (referencial al {fechaEmision}).
             Están sujetos a variación de tipo de cambio después de esta fecha.
           </Text>
         </View>
